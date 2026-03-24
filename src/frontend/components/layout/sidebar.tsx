@@ -9,7 +9,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useContext } from "react";
 import { SidebarContext } from "@/contexts/sidebar-context";
-import { Profile } from "./profile/profile";
+import { Profile } from "./profile";
 
 export const Sidebar = () => {
   const navigationItems = [
@@ -52,7 +52,7 @@ export const Sidebar = () => {
             </i>
             <h1>StudyFlow</h1>
           </Link>
-          <nav className="w-full flex flex-col items-center font-medium text-[20px]">
+          <nav className="w-full flex flex-col items-center font-medium text-[20px] flex-1">
             <ul className="flex flex-col gap-10">
               {navigationItems.map((items) => {
                 const isActive =
@@ -80,7 +80,7 @@ export const Sidebar = () => {
               })}
             </ul>
           </nav>
-          <div className="block md:hidden">
+          <div className="mt-auto block md:hidden ">
             <Profile />
           </div>
         </div>

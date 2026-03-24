@@ -52,7 +52,17 @@ export const Profile = () => {
       </div>
 
       {showMenu && (
-        <div className="absolute right-0 w-full bg-white border border-(--color-border)   shadow-sm overflow-hidden z-50">
+        <div
+          className="
+    absolute left-0 w-full
+    bg-white border border-(--color-border)
+    shadow-sm overflow-hidden z-50
+    transition-all duration-200 ease-in-out
+
+    bottom-full mb-2
+    md:top-full md:bottom-auto md:mt-2
+  "
+        >
           <Link
             href="#"
             className="block px-4 py-2  hover:bg-(--color-hover) transition"

@@ -2,7 +2,7 @@
 
 import { useContext } from "react";
 import { InputComponent } from "../ui/input-component";
-import { Profile } from "./profile/profile";
+import { Profile } from "./profile";
 import { IoMenu } from "react-icons/io5";
 import { SidebarContext } from "@/contexts/sidebar-context";
 
