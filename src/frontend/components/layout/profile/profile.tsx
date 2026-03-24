@@ -26,10 +26,8 @@ export const Profile = () => {
     <div ref={menuRef} className="relative">
       <div
         onClick={() => setShowMenu((prev) => !prev)}
-        className="flex items-center gap-3 p-2 rounded-xl cursor-pointer hover:bg-(--color-hover) transition"
+        className="flex items-center gap-3 p-2 rounded cursor-pointer hover:bg-(--color-hover) transition"
       >
-        <div className="w-px h-6 bg-(--color-border)" />
-
         <div className="w-10 h-10 flex items-center justify-center rounded-full bg-(--color-surface) border border-(--color-border)">
           <Image
             src="https://static.thenounproject.com/png/638636-200.png"
@@ -54,7 +52,7 @@ export const Profile = () => {
       </div>
 
       {showMenu && (
-        <div className="absolute right-0 mt-2 w-48 bg-white border border-(--color-border) rounded-xl shadow-sm overflow-hidden z-50">
+        <div className="absolute right-0 w-full bg-white border border-(--color-border)   shadow-sm overflow-hidden z-50">
           <Link
             href="#"
             className="block px-4 py-2  hover:bg-(--color-hover) transition"
