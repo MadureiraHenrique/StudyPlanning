@@ -1,9 +1,25 @@
 import { InputComponent } from "../ui/input-component";
+import { Profile } from "./profile/profile";
+import { IoMenu } from "react-icons/io5";
 
 export const Header = () => {
   return (
-    <div className="w-full bg-white border-b border-b-(--color-border) h-20 flex items-center p-10">
-      <InputComponent />
-    </div>
+    <header className="w-full bg-white border-b border-(--color-border)">
+      <div className="flex items-center justify-between h-20 px-4 md:px-10 gap-2">
+        <div className="flex-1 max-w-md ">
+          <InputComponent
+            containerClassName="w-full"
+            showIcon={true}
+            placeholder="Buscar..."
+          />
+        </div>
+
+        <div className="hidden md:flex items-center gap-4">
+          <Profile />
+        </div>
+
+        <IoMenu className="text-3xl cursor-pointer md:hidden" />
+      </div>
+    </header>
   );
 };
