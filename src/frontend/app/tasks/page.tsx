@@ -1,7 +1,17 @@
+"use client";
+import { GridTask } from "@/components/task/grid-task";
+import { ListTask } from "@/components/task/list-task";
+import { TaskCategories } from "@/components/task/task-category";
+import { useState } from "react";
+
 const Tasks = () => {
+  const [display, setDisplay] = useState<"grid" | "list">("grid");
   return (
-    <main className="w-full h-full p-10 flex flex-col gap-4 items-start">
-      Tasks
+    <main className="w-full h-full flex flex-col gap-4 items-center">
+      <section className="w-full">
+        <TaskCategories display={display} setDisplay={setDisplay} />
+      </section>
+      <section>{display === "grid" ? <GridTask /> : <ListTask />}</section>
     </main>
   );
 };
