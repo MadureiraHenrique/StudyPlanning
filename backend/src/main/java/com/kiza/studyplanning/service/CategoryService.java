@@ -14,24 +14,24 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    // ✅ Criar categoria
+    // Criar categoria
     public Category create(Category category) {
         return categoryRepository.save(category);
     }
 
-    // ✅ Listar todas
+    // Listar todas
     public List<Category> getAll() {
         return categoryRepository.findAll();
     }
 
-    // ✅ Buscar por ID
+    // Buscar por ID
     public Category getById(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
 
         return category.orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
     }
 
-    // ✅ Atualizar
+    // Atualizar
     public Category update(Long id, Category updatedCategory) {
         Category existingCategory = getById(id);
 
@@ -40,7 +40,7 @@ public class CategoryService {
         return categoryRepository.save(existingCategory);
     }
 
-    // ✅ Deletar
+    // Deletar
     public void delete(Long id) {
         Category category = getById(id);
         categoryRepository.delete(category);

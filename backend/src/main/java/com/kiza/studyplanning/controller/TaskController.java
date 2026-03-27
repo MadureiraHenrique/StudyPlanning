@@ -1,7 +1,9 @@
 package com.kiza.studyplanning.controller;
 
 import com.kiza.studyplanning.models.Task;
-import com.kiza.studyplanning.services.TaskService;
+import com.kiza.studyplanning.service.TaskService;
+import com.kiza.studyplanning.service.TaskService;
+import com.kiza.studyplanning.dto.TaskProgressDTO;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -18,33 +20,38 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    // ✅ Criar uma nova Task
+    // Criar uma nova Task
     @PostMapping
     public Task create(@RequestBody Task task) {
         return taskService.create(task);
     }
 
-    // ✅ Listar todas as Tasks
+    // Listar todas as Tasks
     @GetMapping
     public List<Task> getAll() {
         return taskService.getAll();
     }
 
-    // ✅ Buscar Task por ID
+    // Buscar Task por ID
     @GetMapping("/{id}")
     public Task getById(@PathVariable Long id) {
         return taskService.getById(id);
     }
 
-    // ✅ Atualizar Task
+    // Atualizar Task
     @PutMapping("/{id}")
     public Task update(@PathVariable Long id, @RequestBody Task task) {
         return taskService.update(id, task);
     }
 
-    // ✅ Deletar Task
+    // Deletar Task
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         taskService.delete(id);
+    }
+
+    @GetMapping("/progress")
+    public TaskProgressDTO getProgress() {
+        return taskService.getProgress();
     }
 }

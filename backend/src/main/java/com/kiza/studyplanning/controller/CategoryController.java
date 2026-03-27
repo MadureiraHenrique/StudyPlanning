@@ -18,31 +18,31 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    // ✅ Criar categoria
+    // Criar categoria
     @PostMapping
     public Category create(@RequestBody Category category) {
         return categoryService.create(category);
     }
 
-    // ✅ Listar todas
+    // Listar todas
     @GetMapping
     public List<Category> getAll() {
         return categoryService.getAll();
     }
 
-    // ✅ Buscar por ID
+    // Buscar por ID
     @GetMapping("/{id}")
     public Category getById(@PathVariable Long id) {
         return categoryService.getById(id);
     }
 
-    // ✅ Atualizar categoria
+    // Atualizar categoria
     @PutMapping("/{id}")
     public Category update(@PathVariable Long id, @RequestBody Category category) {
         return categoryService.update(id, category);
     }
 
-    // ✅ Deletar categoria
+    // Deletar categoria
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         categoryService.delete(id);

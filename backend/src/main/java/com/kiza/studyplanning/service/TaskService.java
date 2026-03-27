@@ -1,6 +1,8 @@
-package com.kiza.studyplanning.services;
+package com.kiza.studyplanning.service;
 
+import com.kiza.studyplanning.dto.TaskProgressDTO;
 import com.kiza.studyplanning.models.Task;
+import com.kiza.studyplanning.models.TaskState;
 import com.kiza.studyplanning.repositories.TaskRepository;
 
 import org.springframework.stereotype.Service;
@@ -18,24 +20,24 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    // ✅ Criar Task
+    // Criar Task
     public Task create(Task task) {
         return taskRepository.save(task);
     }
 
-    // ✅ Listar todas
+    // Listar todas
     public List<Task> getAll() {
         return taskRepository.findAll();
     }
 
-    // ✅ Buscar por ID
+    // Buscar por ID
     public Task getById(Long id) {
         Optional<Task> task = taskRepository.findById(id);
 
         return task.orElseThrow(() -> new RuntimeException("Task não encontrada"));
     }
 
-    // ✅ Atualizar
+    // Atualizar
     public Task update(Long id, Task updatedTask) {
         Task existingTask = getById(id);
 
@@ -46,9 +48,18 @@ public class TaskService {
         return taskRepository.save(existingTask);
     }
 
-    // ✅ Deletar
+    // Deletar
     public void delete(Long id) {
         Task task = getById(id);
         taskRepository.delete(task);
+    }
+    // Progresso
+    public TaskProgressDTO getProgress() {
+        long total = taskRepository.count();
+        long completed = taskRepository.countByState(TaskState.DONE);
+
+        double percentage = total > 0 ? (double) completed / total * 100 : 0;
+
+        return new TaskProgressDTO(total, completed, percentage);
     }
 }
