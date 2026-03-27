@@ -1,4 +1,4 @@
-package com.kiza.studyplanning.controllers;
+package com.kiza.studyplanning.controller;
 
 import com.kiza.studyplanning.models.Task;
 import com.kiza.studyplanning.services.TaskService;
