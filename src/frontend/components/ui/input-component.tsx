@@ -1,14 +1,40 @@
+import React from "react";
 import { CiSearch } from "react-icons/ci";
 
-export const InputComponent = () => {
+type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  showIcon?: boolean;
+  containerClassName?: string;
+};
+export const InputComponent = ({
+  showIcon = false,
+  className = "",
+  containerClassName = "",
+  ...rest
+}: InputProps) => {
   return (
-    <div className="flex items-center w-full max-w-md bg-(--color-surface) px-4 py-2 gap-1 rounded-xl border border-(--color-border) shadow-sm transition ">
-      <CiSearch className="text-(--color-text-secondary) text-xl mr-2" />
+    <div
+      className={`
+        flex items-center px-4 py-2 gap-2 
+        rounded-xl border border-(--color-border)
+        bg-(--color-surface) shadow-sm
+        transition focus-within:ring-2 focus-within:ring-(--color-primary)
+        ${containerClassName}
+      `}
+    >
+      {showIcon && (
+        <span className="text-(--color-text-secondary) text-xl">
+          <CiSearch />
+        </span>
+      )}
 
       <input
-        type="text"
-        placeholder="Buscar..."
-        className="w-full bg-transparent outline-none text-(--color-text-primary) placeholder-(--color-text-secondary)"
+        className={`
+          w-full bg-transparent outline-none
+          text-(--color-text-primary)
+          placeholder-(--color-text-secondary)
+          ${className}
+        `}
+        {...rest}
       />
     </div>
   );
