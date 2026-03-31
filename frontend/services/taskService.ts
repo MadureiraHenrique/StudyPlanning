@@ -1,4 +1,4 @@
-import { Task } from "../types/Task";
+import { Task } from "../types/task";
 import { tasks } from "../mocks/tasks";
 
 let taskList = [...tasks];
