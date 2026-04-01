@@ -1,4 +1,5 @@
 "use client";
+import { TaksForms } from "@/components/forms/task-forms";
 import { GridTask } from "@/components/task/grid-task";
 import { ListTask } from "@/components/task/list-task";
 import { TaskCategories } from "@/components/task/task-category";
@@ -12,6 +13,7 @@ const Tasks = () => {
         <TaskCategories display={display} setDisplay={setDisplay} />
       </section>
       <section>{display === "grid" ? <GridTask /> : <ListTask />}</section>
+      <TaksForms formType="New" />
     </main>
   );
 };
