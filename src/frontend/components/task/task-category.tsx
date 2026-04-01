@@ -4,18 +4,20 @@ import { IoFilter } from "react-icons/io5";
 import { LuPlus } from "react-icons/lu";
 import { BsGrid } from "react-icons/bs";
 
-import { RiGridFill, RiMenu2Line } from "react-icons/ri";
+import { RiMenu2Line } from "react-icons/ri";
 
 type DisplayType = "grid" | "list";
 
 type TaskCategoriesProps = {
   display: "grid" | "list";
   setDisplay: React.Dispatch<React.SetStateAction<DisplayType>>;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const TaskCategories = ({
   display,
   setDisplay,
+  setShowForm,
 }: TaskCategoriesProps) => {
   const categories = [
     { id: 0, category_name: "Programação" },
@@ -37,7 +39,10 @@ export const TaskCategories = ({
         <ButtonComponent customize="default">
           <IoFilter /> Filtro
         </ButtonComponent>
-        <ButtonComponent customize="primary">
+        <ButtonComponent
+          customize="primary"
+          onClick={() => setShowForm((prev) => !prev)}
+        >
           <LuPlus />
           Nova tarefa
         </ButtonComponent>

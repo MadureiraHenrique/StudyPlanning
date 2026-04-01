@@ -1,7 +1,14 @@
-import { StatCard } from "@/components/ui/stat-card";
+"use client";
+
+import { StatCard } from "@/components/ui/heder-stat-card";
 import { TaskList } from "@/components/layout/taskList";
+import { useState } from "react";
+import { TaskForms } from "@/components/forms/task-forms";
+import { Card } from "@/components/ui/cards-components";
 
 export default function DashboardPage() {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <div className="flex flex-col gap-4 h-full">
       <div className="flex flex-col gap-0.5">
@@ -10,7 +17,10 @@ export default function DashboardPage() {
         </h1>
         <p className="text-slate-400 font-medium first-letter:uppercase">
           {new Date().toLocaleDateString("pt-BR", {
-            weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
           })}
         </p>
       </div>
@@ -40,16 +50,13 @@ export default function DashboardPage() {
         />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-4 flex-1">
-        <TaskList />
+        <TaskList setShowForm={setShowForm} />
         <div className="flex flex-col gap-4 h-full">
-          <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex-[2]">
-            <h2 className="text-base font-bold text-[#1e293b]">Pomodoro?</h2>
-          </div>
-          <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex-1">
-            <h2 className="text-base font-bold text-[#1e293b]">card 3</h2>
-          </div>
+          <Card title="Pomodoro?" className="flex-[2]" />
+          <Card title="Card 3" className="flex-1" />
         </div>
       </div>
+      {showForm && <TaskForms formType="New" setShowForm={setShowForm} />}
     </div>
   );
 }
