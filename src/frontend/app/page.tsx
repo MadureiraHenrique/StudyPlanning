@@ -2,14 +2,15 @@
 
 import { StatCard } from "@/components/ui/heder-stat-card";
 import { TaskList } from "@/components/layout/taskList";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { TaskForms } from "@/components/forms/task-forms";
 import { Card } from "@/components/ui/cards-components";
 import { Pomodoro } from "@/components/pomodoro/pomodoro";
+import { OpenModal } from "@/contexts/modal-edit-context";
 
 export default function DashboardPage() {
   const [showForm, setShowForm] = useState(false);
-
+  useContext(OpenModal);
   return (
     <div className="flex flex-col gap-4 h-full">
       <div className="flex flex-col gap-0.5">

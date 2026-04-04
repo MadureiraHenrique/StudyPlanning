@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/layout/sidebar";
 import { Header } from "@/components/layout/header";
-import { SidebarProvider } from "@/contexts/sidebar-context";
+import { Providers } from "@/providers/providers";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${inter.variable} h-full antialiased`}>
       <body className="h-full bg-[#f8fafc]">
-        <SidebarProvider>
+        <Providers>
           <div className="flex h-full">
             <Sidebar />
             <div className="flex-1 flex flex-col">
@@ -28,7 +28,7 @@ export default function RootLayout({
               <main className="flex-1 overflow-auto p-8">{children}</main>
             </div>
           </div>
-        </SidebarProvider>
+        </Providers>
       </body>
     </html>
   );

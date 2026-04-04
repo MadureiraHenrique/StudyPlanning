@@ -2,8 +2,10 @@
 import { TaskForms } from "@/components/forms/task-forms";
 import { GridTask } from "@/components/task/grid-task";
 import { ListTask } from "@/components/task/list-task";
+import { ModalEdit } from "@/components/task/modal-edit";
 import { TaskCategories } from "@/components/task/task-category";
-import { useState } from "react";
+import { OpenModal } from "@/contexts/modal-edit-context";
+import { useContext, useState } from "react";
 
 type dataProps = handleSubmitProps;
 

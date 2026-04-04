@@ -1,5 +1,5 @@
 type TextHeaderComponent = {
-  title: string;
+  title: string | undefined;
   subtitle?: string;
 };
 
