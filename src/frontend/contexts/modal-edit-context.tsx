@@ -2,19 +2,14 @@
 import React, { createContext, useState } from "react";
 
 type Task = {
+  id: number;
   title: string;
   category: string;
   status: string;
   description?: string;
-  subtasks?: Subtask[];
 };
 type Props = {
   children: React.ReactNode;
-};
-type Subtask = {
-  id: number;
-  title: string;
-  done: boolean;
 };
 
 type OpenModalContextType = {

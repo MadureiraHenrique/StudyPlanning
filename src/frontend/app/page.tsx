@@ -1,6 +1,6 @@
 "use client";
 
-import { StatCard } from "@/components/ui/heder-stat-card";
+import { StatCard } from "@/components/ui/header-stat-card";
 import { TaskList } from "@/components/layout/taskList";
 import { useContext, useState } from "react";
 import { TaskForms } from "@/components/forms/task-forms";
@@ -54,10 +54,9 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-4 flex-1">
         <TaskList setShowForm={setShowForm} />
         <div className="flex flex-col gap-4 h-full">
-          <Card title="Pomodoro" className="flex-[2]">
+          <Card title="Pomodoro" className="flex-2">
             <Pomodoro />
           </Card>
-          <Card title="Card 3" className="flex-1" />
         </div>
       </div>
       {showForm && <TaskForms formType="New" setShowForm={setShowForm} />}

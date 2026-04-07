@@ -22,7 +22,6 @@ export function TaskList({ setShowForm }: TaskListProps) {
       title: "Estudar React Context API",
       description:
         "Revisar hooks useContext e criar um pequeno projeto de teste",
-      subtasks: [],
       category: "Estudos",
       status: "pending",
     },
@@ -30,11 +29,7 @@ export function TaskList({ setShowForm }: TaskListProps) {
       id: 2,
       title: "Preparar Hackathon",
       description: "",
-      subtasks: [
-        { id: 1, title: "Criar repositório Git", done: true },
-        { id: 2, title: "Configurar TailwindCSS", done: true },
-        { id: 3, title: "Configurar Context para Tasks", done: true },
-      ],
+
       category: "Projeto",
       status: "done",
     },
@@ -43,7 +38,6 @@ export function TaskList({ setShowForm }: TaskListProps) {
       title: "Revisar Código Limpo",
       description:
         "Ler capítulo 3, fazer exercícios do livro e revisar anotações",
-      subtasks: [],
       category: "Leitura",
       status: "done",
     },
@@ -51,11 +45,6 @@ export function TaskList({ setShowForm }: TaskListProps) {
       id: 4,
       title: "Organizar Estudos Semanais",
       description: "",
-      subtasks: [
-        { id: 1, title: "Planejar segunda-feira", done: true },
-        { id: 2, title: "Planejar terça-feira", done: false },
-        { id: 3, title: "Planejar quarta-feira", done: false },
-      ],
       category: "Planejamento",
       status: "pending",
     },
@@ -81,7 +70,6 @@ export function TaskList({ setShowForm }: TaskListProps) {
                 category: task.category,
                 status: task.status,
                 description: task.description,
-                subtasks: task.subtasks,
               })
             }
           >
@@ -108,16 +96,9 @@ export function TaskList({ setShowForm }: TaskListProps) {
                 {task.title}
               </p>
 
-              {task.subtasks.length > 0 ? (
-                <p className="text-xs text-slate-400">
-                  {task.subtasks.filter((s) => s.done).length}/
-                  {task.subtasks.length} concluídas
-                </p>
-              ) : task.description ? (
-                <p className="text-xs text-slate-400 line-clamp-1">
-                  {task.description}
-                </p>
-              ) : null}
+              <p className="text-xs text-slate-400 line-clamp-1">
+                {task.description}
+              </p>
             </div>
           </div>
         ))}

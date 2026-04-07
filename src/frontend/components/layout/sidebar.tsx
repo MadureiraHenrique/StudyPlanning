@@ -2,8 +2,7 @@
 
 import { FaBook } from "react-icons/fa";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { LuTrophy } from "react-icons/lu";
-
+//import { LuTrophy } from "zreact-icons/lu";
 import { BiTask } from "react-icons/bi";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,7 +14,7 @@ export const Sidebar = () => {
   const navigationItems = [
     { id: 0, icon: <LuLayoutDashboard />, text: "Dashboard", href: "/" },
     { id: 1, icon: <BiTask />, text: "Tarefas", href: "/tasks" },
-    { id: 2, icon: <LuTrophy />, text: "Metas", href: "/goals" },
+    //{ id: 2, icon: <LuTrophy />, text: "Metas", href: "/goals" },
   ];
   const pathname = usePathname();
 

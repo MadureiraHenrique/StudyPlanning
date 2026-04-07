@@ -72,13 +72,6 @@ export const Profile = () => {
 
           <Link
             href="#"
-            className="block px-4 py-2  hover:bg-(--color-hover) transition"
-          >
-            Configurações
-          </Link>
-
-          <Link
-            href="#"
             className="block px-4 py-2  text-red-500 hover:bg-red-100 transition"
           >
             Sair

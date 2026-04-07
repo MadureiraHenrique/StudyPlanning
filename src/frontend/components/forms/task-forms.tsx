@@ -13,7 +13,6 @@ type TaskFormsProps = {
 type FormData = {
   title: string;
   description: string;
-  subtasks: string[];
 };
 
 export const TaskForms = ({
@@ -25,42 +24,46 @@ export const TaskForms = ({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [subtasks, setSubtasks] = useState<string[]>([""]);
-
-  function handleSubtaskChange(value: string, index: number) {
-    const updated = [...subtasks];
-    updated[index] = value;
-    setSubtasks(updated);
-  }
-
-  function addSubtask() {
-    setSubtasks((prev) => [...prev, ""]);
-  }
-
-  function removeSubtask(index: number) {
-    if (index > 0) {
-      setSubtasks((prev) => prev.filter((item, i) => i !== index));
-    }
-  }
+  const [showMessage, setShowMessage] = useState("");
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!setTitle) return;
+    if (!title) {
+      setShowMessage("Insira um titulo");
+      setTimeout(() => {
+        setShowMessage("");
+      }, 2000);
+      return;
+    }
+    if (!description) {
+      setShowMessage("Insira uma descrição");
+      setTimeout(() => {
+        setShowMessage("");
+      }, 2000);
+      return;
+    }
 
     const data = {
       title,
       description,
-      subtasks,
     };
     if (handleSubmit) {
       handleSubmit(data);
     }
     setDescription("");
     setTitle("");
-    setSubtasks([""]);
   };
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-2">
+      {showMessage.length > 0 && (
+        <div
+          className={`bg-white rounded border border-(--color-border) border-l-6 border-l-red-300 z-50 top-1 right-2 absolute w-60 h-20 p-2 flex items-center flex-col transition`}
+        >
+          <p className="font-bold">Atenção</p>
+          <p>{showMessage}</p>
+        </div>
+      )}
       <form
         onSubmit={onSubmit}
         className="bg-white rounded shadow border border-(--color-border) flex flex-col p-7 gap-4 w-lg h-140"
@@ -81,7 +84,6 @@ export const TaskForms = ({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Ex: Estudar React Context API"
-              required
             />
           </div>
           <div className="flex justify-between items-center">
@@ -110,23 +112,21 @@ export const TaskForms = ({
                   variant="subtask"
                   placeholder={`Sub-task ${index + 1}`}
                   value={task}
-                  onChange={(e) => handleSubtaskChange(e.target.value, index)}
                   required
+                  readOnly
+                  className="focus:border-gray-200 focus:ring-0 cursor-default"
                 >
-                  <IoMdRemoveCircleOutline
-                    className="cursor-pointer text-2xl text-(--color-primary) hover:text-(--text-primary) transition"
-                    onClick={() => removeSubtask(index)}
-                  />
+                  <IoMdRemoveCircleOutline className="text-2xl text-gray-300  transition" />
                 </InputComponent>
               ))}
 
-              <button
-                type="button"
-                onClick={addSubtask}
-                className="text-sm text-(--color-primary) hover:underline cursor-pointer p-1"
-              >
+              <button type="button" className="text-sm text-gray-300   p-1">
                 + Adicionar sub-tarefa
               </button>
+
+              <p className="bg-gray-300 p-2 rounded-2xl text-gray-400">
+                Funcionalidade em progresso
+              </p>
             </div>
           ) : (
             <textarea

@@ -6,7 +6,7 @@ export const Pomodoro = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(25);
-  const [cicles, setCicles] = useState(0);
+  const [cycles, setcycles] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
 
   //pesquisar: strict mode do react afeta em modo dev, diminui 2 em 2
@@ -25,7 +25,7 @@ export const Pomodoro = () => {
             return prevMinutes - 1;
           }
 
-          setCicles((cicle) => cicle + 1);
+          setcycles((cicle) => cicle + 1);
           setShowMessage(true);
           setIsRunning(false);
           return 24;
@@ -39,21 +39,21 @@ export const Pomodoro = () => {
   }, [isRunning]);
 
   useEffect(() => {
-    if (cicles === 0) return;
+    if (cycles === 0) return;
     const timer = setTimeout(() => {
       setShowMessage(false);
     }, 3000);
     return () => clearTimeout(timer);
-  }, [cicles]);
+  }, [cycles]);
 
   return (
     <div className="w-full h-full flex flex-col justify-evenly items-center p-2">
       {showMessage && (
         <div
-          className={`bg-white border border-(--color-border) border-l-6 border-l-(--color-highlight) z-50 top-1 right-2 absolute w-60 h-20 p-2 flex items-center flex-col transition`}
+          className={`bg-white rounded border border-(--color-border) border-l-6 border-l-(--color-highlight) z-50 top-1 right-2 absolute w-60 h-20 p-2 flex items-center flex-col transition`}
         >
           <p className="font-bold">Parabéns</p>
-          <p>ciclo {cicles} concluído</p>
+          <p>ciclo {cycles} concluído</p>
         </div>
       )}
       <h1 className="font-bold text-9xl">
@@ -78,7 +78,7 @@ export const Pomodoro = () => {
         </ButtonComponent>
       </div>
       <p className="font-bold text-white bg-(--color-text-primary) p-2 rounded-2xl">
-        {cicles} ciclos
+        {cycles} ciclos
       </p>
     </div>
   );

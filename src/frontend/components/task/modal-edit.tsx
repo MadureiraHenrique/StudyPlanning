@@ -2,63 +2,66 @@
 import { FaX } from "react-icons/fa6";
 import { ButtonComponent } from "../ui/button-component";
 import { TextHeaderComponent } from "../ui/text-header-component";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { OpenModal } from "@/contexts/modal-edit-context";
-import { InputComponent } from "../ui/input-component";
-import { IoMdRemoveCircleOutline } from "react-icons/io";
-import { FaCheck } from "react-icons/fa";
-import { title } from "process";
-
-type Subtask = {
-  id: number;
-  title: string;
-  done: boolean;
-};
 
 export const ModalEdit = () => {
   const context = useContext(OpenModal);
-  const [subtasks, setSubtasks] = useState<Subtask[]>([]);
+
+  const [showMessage, setShowMessage] = useState("");
+  const [description, setDescription] = useState("");
+  const descriptionRef = useRef<HTMLDivElement>(null);
 
   if (!context) return null;
 
   const { openModal, setOpenModal, taskData } = context;
 
-  if (!openModal) return null;
-  console.log(taskData);
+  if (!openModal || !taskData) return null;
+
+  const url = process.env.NEXT_PUBLIC_API_URL;
+  const MAX_LENGTH = 500;
 
   useEffect(() => {
-    if (taskData?.subtasks) {
-      setSubtasks(taskData.subtasks);
+    setDescription(taskData.description || "");
+    if (descriptionRef.current) {
+      descriptionRef.current.innerText = taskData.description || "";
     }
   }, [taskData]);
 
-  function handleSubtaskChange(value: string, index: number) {
-    setSubtasks((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, title: value } : item)),
-    );
-  }
-  //alterar forma do id
-  function addSubtask() {
-    setSubtasks((prev) => [
-      ...prev,
-      { id: Date.now(), title: "", done: false },
-    ]);
-  }
+  const handleSave = async () => {
+    if (!description || description) {
+      //alterar
+      alert("DISPARANDO");
+      return;
+    }
+    if (description.length > MAX_LENGTH) {
+      alert(`Descrição deve ter no máximo ${MAX_LENGTH} caracteres.`);
+      return;
+    }
 
-  function removeSubtask(index: number) {
-    setSubtasks((prev) => prev.filter((_, i) => i !== index));
-  }
+    const updatedTask = {
+      ...taskData,
+      description,
+    };
 
-  function toggleDone(index: number) {
-    setSubtasks((prev) =>
-      prev.map((item, i) =>
-        i === index ? { ...item, done: !item.done } : item,
-      ),
-    );
-  }
+    try {
+      const res = await fetch(`${url}/tasks/${taskData.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedTask),
+      });
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Erro ao atualizar a tarefa");
+      }
+      setShowMessage(`Tarefa ${taskData.title} atualizada com sucesso`);
+      setTimeout(() => setShowMessage(""), 2000);
 
-  //criar funcao para dar update no back
-  //limitar numero de caracteres do description
+      setOpenModal(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="z-50 bg-black/50 inset-0 fixed flex items-center justify-center">
@@ -89,57 +92,21 @@ export const ModalEdit = () => {
           <div className="flex gap-10">
             <ButtonComponent customize="default">Arquivar</ButtonComponent>
 
-            <ButtonComponent customize="primary" className="w-40">
+            <ButtonComponent
+              customize="primary"
+              className="w-40"
+              onClick={handleSave}
+            >
               Salvar
             </ButtonComponent>
           </div>
         </div>
 
         <div className="flex flex-col w-full h-full min-h-0 p-2 rounded border border-(--color-border)">
-          <p className="text-(--color-text-secondary) text-xl">
-            {taskData?.subtasks && taskData.subtasks.length > 0
-              ? "SubTasks:"
-              : "Descrição:"}
-          </p>
-          {taskData?.subtasks && taskData.subtasks.length > 0 ? (
-            <div className="w-full flex flex-col gap-2">
-              {subtasks.map((subtask, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <div
-                    className={`w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 cursor-pointer ${
-                      subtask.done
-                        ? "bg-sky-500 border-sky-500"
-                        : "border-slate-200"
-                    }`}
-                    onClick={() => toggleDone(index)}
-                  >
-                    {subtask.done && <FaCheck className="text-white text-sm" />}
-                  </div>
-                  <InputComponent
-                    variant="subtask"
-                    placeholder={`Sub-task ${index + 1}`}
-                    value={subtask.title}
-                    onChange={(e) => handleSubtaskChange(e.target.value, index)}
-                    required
-                  >
-                    <IoMdRemoveCircleOutline
-                      className="cursor-pointer text-2xl text-(--color-primary) hover:text-(--text-primary) transition"
-                      onClick={() => removeSubtask(index)}
-                    />
-                  </InputComponent>
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={addSubtask}
-                className="text-sm text-(--color-primary) hover:underline cursor-pointer p-1"
-              >
-                + Adicionar sub-tarefa
-              </button>
-            </div>
-          ) : (
-            <div
-              className="
+          <p className="text-(--color-text-secondary) text-xl">Descrição:</p>
+
+          <div
+            className="
               w-full flex-1 min-h-0
               overflow-y-auto
               outline-none
@@ -147,12 +114,15 @@ export const ModalEdit = () => {
               whitespace-pre-wrap
               p-2
             "
-              contentEditable="true"
-              dangerouslySetInnerHTML={{
-                __html: taskData?.description || "",
-              }}
-            />
-          )}
+            ref={descriptionRef}
+            contentEditable={true}
+            onInput={() => {
+              if (descriptionRef.current) {
+                setDescription(descriptionRef.current.innerText);
+              }
+            }}
+            suppressContentEditableWarning={true}
+          />
         </div>
       </div>
     </div>
